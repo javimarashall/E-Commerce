@@ -7,11 +7,11 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   // find all products
   try {
-    const productData = await Product.findAll({
-      include: [{ model: Category }, { model: Tag }]
+    const productData = await Product.findAll({ //waits for the response to be resolved
+      include: [{ model: Category }, { model: Tag }] //Includes its associated category and tag
     });
-    res.status(200).json(productData);
-  } catch (err) {
+    res.status(200).json(productData); //serve the response stored in productData
+  } catch (err) { //catches the error if it's a server error
     res.status(500).json(err);
   }
 });
@@ -22,15 +22,15 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   try {
-    const productData = await Product.findByPk(req.params.id, {
-      include: [{ model: Category }, { model: Tag }]
+    const productData = await Product.findByPk(req.params.id, { //finds a single product by primary key
+      include: [{ model: Category }, { model: Tag }] //includes its associated category and tag
     });
-    if (!productData) {
+    if (!productData) { //If there's an error, display the message
       res.status(404).json({ message: 'No location found with this id!' });
       return;
     }
-    res.status(200).json(productData);
-  } catch (err) {
+    res.status(200).json(productData);//serves the response
+  } catch (err) {//catch an error if there's one
     res.status(500).json(err)  
   // be sure to include its associated Category and Tag data
 }

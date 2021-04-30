@@ -6,7 +6,7 @@ This software contains an application on the backend side that helps an e-commer
 E-commerce companies are constantly adding new products, deleting products, and updating current products. This application addresses those features required for a successful e-commerce company. The user is able to create, update, and delete categories, products, and tags. The user is able to accomplish this because every category, product and tag, have unique identifiers. When a user adds a new category, product, or tag, the application automatically gives the new item a unique id.  
 
 ## Site
-![site](./assets/site.gif)
+![site](./Assets/site.gif)
 
 ## Technologies Used
 * Javascript - Used to write in Node

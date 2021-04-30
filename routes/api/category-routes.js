@@ -42,43 +42,43 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res) => { //This is the route to get categories by id
   // update a category by its `id` value
-  console.log('****', req.body)
+  console.log('****', req.body) //console log the req.body
   try {
-    const categoryData = await Category.update(req.body, {
+    const categoryData = await Category.update(req.body, { //updates the category but also waits until the promise is resolved to move on
       where: {
-        id: req.params.id,
+        id: req.params.id, //The id entered by the user to be deleted
       },
     });
-    if (!categoryData){
-      res.status(404).json({message: 'No user with this id'});
+    if (!categoryData){ //If the id is not found, throw error
+      res.status(404).json({message: 'No user with this id'}); //display this message if there's an error
       return;
     }
-    res.status(200).json(categoryData);
+    res.status(200).json(categoryData); //if there's no error, send over the data
   }
   catch (err) {
-    res.status(500).json(err);
+    res.status(500).json(err); //if there's a server error, send status 500
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => { //the route to delete a category depending on id
   // delete a category by its `id` value
   try {
-    const categoryData = await Category.destroy({
+    const categoryData = await Category.destroy({ //the destroy means to delete the category
       where: {
-        id: req.params.id
+        id: req.params.id //where the user enters the id of the category to be deleted
       }
     });
 
-    if (!categoryData) {
+    if (!categoryData) { //if no id found, throw error and display error message
       res.status(404).json({ message: 'No category found with this id!' });
       return;
     }
 
-    res.status(200).json(categoryData);
+    res.status(200).json(categoryData);//No error, send over the data
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json(err);//server error, show status 500
   }
 });
 

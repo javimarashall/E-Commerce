@@ -16,47 +16,38 @@ E-commerce companies are constantly adding new products, deleting products, and 
 * Npm - Used to obtain software packages
 * GitHub - Used as the repository
 * MySQL - A database management system
-* Inquirer - Used to prompt user questions
 * Console.table - Used to print mysql rows to the console
+* Sequelize - A Mysql framework
+* Insomnia - Used to test API routes
 
 ## Code Snippet
-This code snippet represents the code that runs the function to be able to view employees. Just as important, this code also represents the query used to be able to join the employee table, the role table, and the department table. 
-
+This code snippet represents the code used for making a route request using a primary key of id. Important to note is the usage of async and await in the function. The application won't continue until the promise is resolved. Also, the application responds with status messages such as a 200, 404, or 500. 
 ```javascript
-const viewEmployees = () => {
-    const query =
-        `
-    SELECT
-		employee.id,
-        employee.first_name,
-        employee.last_name,
-        employee_role.title,
-        employee_role.salary,
-        department.name AS department,
-        CONCAT(manager.first_name," ",manager.last_name) AS manager
-    FROM
-		employee 
-	LEFT JOIN employee_role ON employee.role_id = employee_role.id
-    LEFT JOIN department ON employee_role.department_id = department.id
-    LEFT JOIN employee manager ON manager.id = employee.manager_id
-    `;
-    connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.table(res);
-        runStart();
+router.get('/:id', async(req, res) => {
+  // find one category by its `id` value
+  try{
+    const categoryData = await Category.findByPk(req.params.id, {
+      include: [{ model: Product }],//include its associated Products
     });
-};
+    if (!categoryData) { //throw error if id does not match the product
+      res.status(404).json({message: 'No category found with that ID'});
+      return;
+    }
+    res.status(200).json(categoryData); //responds with a 200 status message and the data
+  }catch (err){ //catch error if theres one and responds with a status 500 message
+    res.status(500).json(err);
+  }  
+});
 ```
 
 ## Starting the Application
 In order to start the application from the command line, the user needs to run: node server.js
 
 ## Repository Link
-https://github.com/javimarashall/Employee-Management-System
+https://github.com/javimarashall/E-Commerce
 
 ## Video Link
-https://drive.google.com/file/d/1gRLCINZI5QFbGv9AMPGNnGhS-M6HJqVR/view
-
+https://drive.google.com/file/d/1eiLX9qLtJ1KMwkTSbLyf514ZV4cOZy2C/view
 ## Personal Links
 [Github](https://github.com/javimarashall)<br>
 [Linkedin](https://www.linkedin.com/in/javier-mondragon-7b471719b/)

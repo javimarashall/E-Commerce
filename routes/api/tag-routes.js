@@ -47,38 +47,38 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value
   try {
-    const tagData = await Tag.update(req.body, {
+    const tagData = await Tag.update(req.body, { //update tag by id
       where: {
-        id: req.params.id,
+        id: req.params.id, 
       },
     });
-    if (!tagData){
+    if (!tagData){ //if there's an error, throw error and message
       res.status(404).json({message: 'No user with this id'});
       return;
     }
-    res.status(200).json(tagData);
+    res.status(200).json(tagData); //if there's no error, send over data
   }
-  catch (err) {
+  catch (err) { //if there's a server error, throw error
     res.status(500).json(err);
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {//delete tag by id
   // delete on tag by its `id` value
   try {
-    const tagData = await Tag.destroy({
+    const tagData = await Tag.destroy({ //use the await to wait for the promise to be resolved
       where: {
         id: req.params.id
       }
     });
 
-    if (!tagData) {
+    if (!tagData) { //if there's an error, throw error and display message
       res.status(404).json({ message: 'No category found with this id!' });
       return;
     }
 
-    res.status(200).json(tagData);
-  } catch (err) {
+    res.status(200).json(tagData);//if there's no error, send over data
+  } catch (err) {//if there's a server error, throw error
     res.status(500).json(err);
   }
 });
